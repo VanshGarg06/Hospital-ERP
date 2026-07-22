@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediBridge Hospital ERP</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="logo">MediBridge ERP</div>
+      <nav class="main-nav">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#register">Register</a>
+        <a href="#login">Login</a>
+      </nav>
+    </header>
+
+    <section id="hero" class="hero">
+      <div class="carousel">
+        <div class="carousel-slide active">
+          <h1>Connected Care for Doctors</h1>
+          <p>Manage patient caseload, OPD schedules, follow-ups, and tasks from a unified dashboard.</p>
+        </div>
+        <div class="carousel-slide">
+          <h1>Patient-Centric Experience</h1>
+          <p>Patients access their records, prescriptions, discharge reports, and follow-up timelines anytime.</p>
+        </div>
+        <div class="carousel-slide">
+          <h1>Hospital ERP Simplified</h1>
+          <p>Modern workflows for registrations, admissions, discharges, and daily operations in one place.</p>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" data-direction="prev">&#10094;</button>
+          <button class="carousel-btn" data-direction="next">&#10095;</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="panel about">
+      <h2>About Us</h2>
+      <p>
+        MediBridge Hospital ERP empowers care teams with a single source of truth for scheduling, patient engagement,
+        medical documentation, and administrative tasks. Built with Flask and SQLite, our secure cloud-ready platform is
+        tailored for medium-sized hospitals seeking digital transformation without complexity.
+      </p>
+      <div class="highlights">
+        <div class="highlight-card">
+          <h3>Smart Dashboards</h3>
+          <p>Role-based dashboards ensure doctors and patients see precisely what matters.</p>
+        </div>
+        <div class="highlight-card">
+          <h3>Integrated Schedules</h3>
+          <p>Outpatient, ward rounds, surgeries, and meetings are all orchestrated inside the ERP.</p>
+        </div>
+        <div class="highlight-card">
+          <h3>Complete Patient Journey</h3>
+          <p>Track admissions, inpatient progress, discharge summaries, and follow-up visits seamlessly.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="register" class="panel register">
+      <h2>Register</h2>
+      <div class="form-grid">
+        <form id="doctor-register-form" class="card">
+          <h3>Doctor Registration</h3>
+          <label>First Name <input name="first_name" required /></label>
+          <label>Last Name <input name="last_name" required /></label>
+          <label>Phone Number <input name="phone_number" required /></label>
+          <label>Email <input type="email" name="email" /></label>
+          <label>Department
+            <select name="department" required>
+              <option value="">Select department</option>
+              <option>Cardiology</option>
+              <option>Pathology</option>
+              <option>Neurology</option>
+              <option>Orthopedics</option>
+              <option>General Medicine</option>
+            </select>
+          </label>
+          <label>Specialization <input name="specialization" /></label>
+          <label>Experience (years) <input type="number" min="0" name="years_experience" /></label>
+          <button type="submit">Create Doctor</button>
+          <p class="form-feedback" data-role="doctor"></p>
+        </form>
+
+        <form id="patient-register-form" class="card">
+          <h3>Patient Registration</h3>
+          <label>First Name <input name="first_name" required /></label>
+          <label>Last Name <input name="last_name" required /></label>
+          <label>Date of Birth <input type="date" name="date_of_birth" /></label>
+          <label>Gender
+            <select name="gender">
+              <option value="">Select gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Phone Number <input name="phone_number" required /></label>
+          <label>Email <input type="email" name="email" /></label>
+          <label>Address <input name="address" /></label>
+          <label>Emergency Contact <input name="emergency_contact" /></label>
+          <label>Medical History <textarea name="medical_history"></textarea></label>
+          <label>Visit Type
+            <select name="visit_type">
+              <option value="outpatient">Outpatient</option>
+              <option value="inpatient">Inpatient</option>
+            </select>
+          </label>
+          <label>Visit Reason <input name="visit_reason" required /></label>
+          <label>Assign Doctor ID <input name="doctor_id" placeholder="DOC-00001" /></label>
+          <button type="submit">Register Patient</button>
+          <p class="form-feedback" data-role="patient"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="login" class="panel login">
+      <h2>Login</h2>
+      <div class="form-grid single">
+        <form id="login-form" class="card">
+          <h3>Access Dashboard</h3>
+          <label>Role
+            <select name="role">
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+            </select>
+          </label>
+          <label>Username <input name="username" placeholder="PAT-00001 or DOC-00001" required /></label>
+          <label>Password <input type="password" name="password" required /></label>
+          <button type="submit">Login</button>
+          <p class="form-feedback" data-role="login"></p>
+        </form>
+      </div>
+
+      <div class="dashboards">
+        <div class="card dashboard" id="patient-dashboard" hidden>
+          <h3>Patient Dashboard</h3>
+          <div class="dashboard-section">
+            <h4>Personal Information</h4>
+            <div id="patient-details"></div>
+          </div>
+          <div class="dashboard-section">
+            <h4>Prescriptions</h4>
+            <ul id="patient-prescriptions"></ul>
+          </div>
+          <div class="dashboard-section">
+            <h4>Visits</h4>
+            <ul id="patient-visits"></ul>
+          </div>
+          <div class="dashboard-section">
+            <h4>Discharge Summary</h4>
+            <div id="patient-discharge"></div>
+          </div>
+        </div>
+
+        <div class="card dashboard" id="doctor-dashboard" hidden>
+          <h3>Doctor Dashboard</h3>
+          <div class="dashboard-section">
+            <h4>Assigned Patients</h4>
+            <ul id="doctor-patients"></ul>
+          </div>
+          <div class="dashboard-section">
+            <h4>Schedules</h4>
+            <ul id="doctor-schedules"></ul>
+          </div>
+          <div class="dashboard-section">
+            <h4>Follow-ups</h4>
+            <ul id="doctor-followups"></ul>
+          </div>
+
+          <div class="dashboard-section forms">
+            <h4>Create Schedule</h4>
+            <form id="schedule-form">
+              <label>Title <input name="title" required /></label>
+              <label>Description <input name="description" /></label>
+              <label>Start Time <input type="datetime-local" name="start_time" required /></label>
+              <label>End Time <input type="datetime-local" name="end_time" required /></label>
+              <label>Location <input name="location" /></label>
+              <button type="submit">Add Schedule</button>
+              <p class="form-feedback" data-role="schedule"></p>
+            </form>
+          </div>
+
+          <div class="dashboard-section forms">
+            <h4>Plan Follow-up</h4>
+            <form id="followup-form">
+              <label>Patient ID <input name="patient_id" placeholder="PAT-00001" required /></label>
+              <label>Scheduled For <input type="datetime-local" name="scheduled_for" required /></label>
+              <label>Notes <input name="notes" /></label>
+              <button type="submit">Create Follow-up</button>
+              <p class="form-feedback" data-role="followup"></p>
+            </form>
+          </div>
+
+          <div class="dashboard-section forms">
+            <h4>Prescription</h4>
+            <form id="prescription-form">
+              <label>Patient ID <input name="patient_id" placeholder="PAT-00001" required /></label>
+              <label>Medication <input name="medication" required /></label>
+              <label>Dosage <input name="dosage" required /></label>
+              <label>Instructions <textarea name="instructions" required></textarea></label>
+              <button type="submit">Add Prescription</button>
+              <p class="form-feedback" data-role="prescription"></p>
+            </form>
+          </div>
+
+          <div class="dashboard-section forms">
+            <h4>Record Visit</h4>
+            <form id="visit-form">
+              <label>Patient ID <input name="patient_id" placeholder="PAT-00001" required /></label>
+              <label>Visit Type
+                <select name="visit_type">
+                  <option value="outpatient">Outpatient</option>
+                  <option value="inpatient">Inpatient</option>
+                </select>
+              </label>
+              <label>Reason <input name="visit_reason" required /></label>
+              <label>Notes <textarea name="notes"></textarea></label>
+              <button type="submit">Log Visit</button>
+              <p class="form-feedback" data-role="visit"></p>
+            </form>
+          </div>
+
+          <div class="dashboard-section forms">
+            <h4>Discharge Patient</h4>
+            <form id="discharge-form">
+              <label>Patient ID <input name="patient_id" placeholder="PAT-00001" required /></label>
+              <label>Summary <textarea name="summary_text" required></textarea></label>
+              <label>Recommendations <textarea name="recommendations"></textarea></label>
+              <label>Follow-up Date <input type="date" name="follow_up_date" /></label>
+              <button type="submit">Generate Discharge</button>
+              <p class="form-feedback" data-role="discharge"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="panel contact">
+      <h2>Contact Us</h2>
+      <div class="contact-grid">
+        <div>
+          <p>Have a question or need a guided demo? Our implementation team is ready to help.</p>
+          <ul>
+            <li>Email: hello@medibridgeerp.com</li>
+            <li>Phone: +91 98765 43210</li>
+            <li>Address: Sector 128, Noida, Uttar Pradesh</li>
+          </ul>
+        </div>
+        <form class="card" id="contact-form">
+          <label>Your Name <input name="name" required /></label>
+          <label>Email <input type="email" name="email" required /></label>
+          <label>Message <textarea name="message" required></textarea></label>
+          <button type="submit">Send Message</button>
+          <p class="form-feedback" data-role="contact"></p>
+        </form>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="year"></span> MediBridge ERP. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+
