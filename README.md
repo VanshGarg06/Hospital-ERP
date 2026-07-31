@@ -85,6 +85,16 @@ Full endpoint list lives in `backend/app/routes.py`.
 - Integrate notification systems (SMS/email) for follow-ups and discharge instructions.
 - Package the frontend with a bundler or migrate to React/Next.js for richer UX.
 
-## License
+## Screenshots
+<img width="1917" height="870" alt="ERP1" src="https://github.com/user-attachments/assets/472e8240-9a03-4e77-a2e9-f83d360444e0" />
+<img width="1917" height="857" alt="ERP2" src="https://github.com/user-attachments/assets/18fe24a7-0bf2-4e69-80e3-e15e529dd4c6" />
+<img width="1917" height="867" alt="ERP3" src="https://github.com/user-attachments/assets/6296575d-1347-44d0-9879-feb90e4c67c6" />
+<img width="1917" height="856" alt="ERP4" src="https://github.com/user-attachments/assets/5bd2d44f-75c0-46d5-9d59-488d2953af5a" />
+<img width="1917" height="862" alt="ERP5" src="https://github.com/user-attachments/assets/ea7d8b13-748c-40a6-b067-a51df4792d37" />
+<img width="1917" height="847" alt="ERP6" src="https://github.com/user-attachments/assets/156e038e-c6af-47ec-8d0a-232de5d54dce" />
 
-This prototype is provided as-is for demonstration and educational purposes.
+
+
+
+
+
