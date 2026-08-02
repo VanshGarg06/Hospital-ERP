@@ -45,6 +45,4 @@ def create_app(testing: bool = False) -> Flask:
 
     return app
 
-
 app = create_app()
-

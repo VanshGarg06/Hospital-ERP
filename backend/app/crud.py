@@ -1,10 +1,7 @@
 from __future__ import annotations
-
 from datetime import datetime
 from typing import Optional
-
 from sqlalchemy.exc import NoResultFound
-
 from .database import db, session_scope
 from .models import (
     DischargeSummary,

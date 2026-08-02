@@ -35,7 +35,13 @@ cursor.execute("""
 doctors = cursor.fetchall()
 
 if doctors:
-    print(f"{'Username (ID)':<15} {'Name':<30} {'Phone (Password)':<20} {'Email':<25} {'Department':<20}")
+    print(
+        f"{'Username (ID)':<15} "
+        f"{'Name':<30} " 
+        f"{'Phone (Password)':<20} " 
+        f"{'Email':<25} " 
+        f"{'Department':<20} "
+    )
     print("-" * 80)
     for doc_id, first_name, last_name, phone, email, dept in doctors:
         name = f"{first_name} {last_name}"
@@ -78,4 +84,3 @@ print("3. Role: Select 'doctor' for doctor accounts or 'patient' for patient acc
 print("=" * 80)
 
 conn.close()
-
