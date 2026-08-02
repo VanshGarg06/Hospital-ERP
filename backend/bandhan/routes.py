@@ -1,11 +1,14 @@
-from __future__ import annotations
+"""
+This module defines the API routes for the hospital management system.
+It includes endpoints for managing doctors, patients, 
+schedules, follow-ups, visits, prescriptions, and authentication.
+"""
 
+from __future__ import annotations
 from datetime import datetime
 from typing import Any, Callable, Dict
-
 from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import joinedload
-
 from . import schemas
 from .crud import (
     add_prescription,
@@ -24,25 +27,27 @@ from .crud import (
     update_patient,
     update_schedule,
 )
-from .database import db
 from .models import DischargeSummary, Doctor, FollowUp, FollowUpStatus, Patient, ScheduleItem
 from .utils import generate_session_token, verify_password
 
 api_bp = Blueprint("api", __name__)
 
-
 SessionStore = dict[str, dict[str, Any]]
 SESSIONS: SessionStore = {}
 
-
 def validate(schema_cls: Callable[..., Any], payload: Dict[str, Any]):
-    try:
-        return schema_cls(**payload)
-    except Exception as exc:  # noqa: BLE001
-        return str(exc)
+    """
+    Validate the payload against the provided Pydantic schema class.
+    Returns the validated data.
+    """
+    return schema_cls(**payload)
 
 
 def parse_request(schema_cls):
+    """
+    Parse and validate the incoming JSON request against the provided schema class.
+    Returns the validated data or an error response.
+    """
     payload = request.get_json(silent=True) or {}
     validation = validate(schema_cls, payload)
     if isinstance(validation, str):
@@ -52,6 +57,11 @@ def parse_request(schema_cls):
 
 @api_bp.route("/doctors/register", methods=["POST"])
 def register_doctor():
+    """
+    Endpoint to register a new doctor.
+    Expects a JSON payload matching the DoctorCreate schema.
+    Returns the created doctor's identifier or an error message.
+    """
     data, error = parse_request(schemas.DoctorCreate)
     if error:
         return error
@@ -62,6 +72,12 @@ def register_doctor():
 
 @api_bp.route("/doctors/<doctor_id>", methods=["GET"])
 def get_doctor_details(doctor_id: str):
+    """
+    Endpoint to retrieve details of a specific doctor, 
+    including their patients, schedules, and follow-ups.
+    Returns a JSON response with the doctor's information 
+    or an error message if not found.
+    """
     doctor = (
         Doctor.query.options(
             joinedload(Doctor.patients).joinedload(Patient.visits),
@@ -141,6 +157,11 @@ def get_doctor_details(doctor_id: str):
 
 @api_bp.route("/doctors/<doctor_id>", methods=["PUT"])
 def update_doctor_profile(doctor_id: str):
+    """
+    Endpoint to update a doctor's profile.
+    Expects a JSON payload with the fields to update.
+    Returns a success message or an error if the doctor is not found.
+    """
     doctor = get_doctor_by_identifier(doctor_id)
     if not doctor:
         return jsonify({"error": "Doctor not found"}), 404
@@ -152,6 +173,10 @@ def update_doctor_profile(doctor_id: str):
 
 @api_bp.route("/doctors/<doctor_id>", methods=["DELETE"])
 def remove_doctor_profile(doctor_id: str):
+    """
+    Endpoint to delete a doctor's profile.
+    Returns a success message or an error if the doctor is not found.
+    """
     doctor = get_doctor_by_identifier(doctor_id)
     if not doctor:
         return jsonify({"error": "Doctor not found"}), 404
@@ -161,6 +186,11 @@ def remove_doctor_profile(doctor_id: str):
 
 @api_bp.route("/doctors/<doctor_id>/schedule", methods=["POST"])
 def add_doctor_schedule(doctor_id: str):
+    """
+    Endpoint to add a new schedule item for a doctor.
+    Expects a JSON payload matching the ScheduleCreate schema.
+    Returns the created schedule item's identifier or an error message.
+    """
     doctor = get_doctor_by_identifier(doctor_id)
     if not doctor:
         return jsonify({"error": "Doctor not found"}), 404
@@ -175,6 +205,11 @@ def add_doctor_schedule(doctor_id: str):
 
 @api_bp.route("/doctors/<doctor_id>/schedule/<int:schedule_id>", methods=["PUT"])
 def modify_schedule(doctor_id: str, schedule_id: int):
+    """
+    Endpoint to update an existing schedule item for a doctor.
+    Expects a JSON payload with the fields to update.
+    Returns a success message or an error if the doctor or schedule item is not found.
+    """
     doctor = get_doctor_by_identifier(doctor_id)
     if not doctor:
         return jsonify({"error": "Doctor not found"}), 404
@@ -190,6 +225,10 @@ def modify_schedule(doctor_id: str, schedule_id: int):
 
 @api_bp.route("/doctors/<doctor_id>/schedule/<int:schedule_id>", methods=["DELETE"])
 def remove_schedule(doctor_id: str, schedule_id: int):
+    """
+    Endpoint to delete a schedule item for a doctor.
+    Returns a success message or an error if the doctor or schedule item is not found.
+    """
     doctor = get_doctor_by_identifier(doctor_id)
     if not doctor:
         return jsonify({"error": "Doctor not found"}), 404
@@ -203,6 +242,11 @@ def remove_schedule(doctor_id: str, schedule_id: int):
 
 @api_bp.route("/doctors/<doctor_id>/followups", methods=["POST"])
 def create_followup(doctor_id: str):
+    """
+    Endpoint to create a new follow-up for a doctor.
+    Expects a JSON payload matching the FollowUpCreate schema.
+    Returns the created follow-up's identifier or an error message.
+    """
     doctor = get_doctor_by_identifier(doctor_id)
     if not doctor:
         return jsonify({"error": "Doctor not found"}), 404
@@ -226,6 +270,11 @@ def create_followup(doctor_id: str):
 
 @api_bp.route("/doctors/<doctor_id>/followups/<int:follow_up_id>", methods=["PATCH"])
 def update_followup(doctor_id: str, follow_up_id: int):
+    """
+    Endpoint to update an existing follow-up for a doctor.
+    Expects a JSON payload with the fields to update (status and/or notes).
+    Returns a success message or an error if the doctor or follow-up is not found.
+    """
     doctor = get_doctor_by_identifier(doctor_id)
     if not doctor:
         return jsonify({"error": "Doctor not found"}), 404
@@ -250,6 +299,11 @@ def update_followup(doctor_id: str, follow_up_id: int):
 
 @api_bp.route("/patients/register", methods=["POST"])
 def register_patient():
+    """
+    Endpoint to register a new patient.
+    Expects a JSON payload matching the PatientCreate schema.
+    Returns the created patient's identifier or an error message.
+    """
     data, error = parse_request(schemas.PatientCreate)
     if error:
         print("Parsing Error")
@@ -266,6 +320,12 @@ def register_patient():
 
 @api_bp.route("/patients/<patient_id>", methods=["GET"])
 def get_patient_details(patient_id: str):
+    """
+    Endpoint to retrieve details of a specific patient,
+    including their visits, prescriptions, and discharge summary.
+    Returns a JSON response with the patient's information
+    or an error message if not found.
+    """
     patient = (
         get_patient_by_identifier(patient_id)
     )
@@ -341,7 +401,8 @@ def get_patient_details(patient_id: str):
                 "ward": patient.ward,
                 "bed_number": patient.bed_number,
                 "admitted_at": patient.admitted_at.isoformat() if patient.admitted_at else None,
-                "discharged_at": patient.discharged_at.isoformat() if patient.discharged_at else None,
+                "discharged_at": patient.discharged_at.isoformat() 
+                if patient.discharged_at else None,
                 "doctor": doctor_info,
             },
             "visits": visits,
@@ -353,6 +414,11 @@ def get_patient_details(patient_id: str):
 
 @api_bp.route("/patients/<patient_id>", methods=["PUT"])
 def update_patient_details(patient_id: str):
+    """
+    Endpoint to update a patient's details.
+    Expects a JSON payload with the fields to update.
+    Returns a success message or an error if the patient is not found.
+    """
     patient = get_patient_by_identifier(patient_id)
     if not patient:
         return jsonify({"error": "Patient not found"}), 404
@@ -369,6 +435,11 @@ def update_patient_details(patient_id: str):
 
 @api_bp.route("/patients/<patient_id>/visits", methods=["POST"])
 def add_patient_visit(patient_id: str):
+    """
+    Endpoint to record a new visit for a patient.
+    Expects a JSON payload matching the VisitCreate schema.
+    Returns the created visit's identifier or an error message.
+    """
     patient = get_patient_by_identifier(patient_id)
     if not patient:
         return jsonify({"error": "Patient not found"}), 404
@@ -395,6 +466,11 @@ def add_patient_visit(patient_id: str):
 
 @api_bp.route("/patients/<patient_id>/prescriptions", methods=["POST"])
 def create_patient_prescription(patient_id: str):
+    """
+    Endpoint to create a new prescription for a patient.
+    Expects a JSON payload matching the PrescriptionCreate schema.
+    Returns the created prescription's identifier or an error message.
+    """
     patient = get_patient_by_identifier(patient_id)
     if not patient:
         return jsonify({"error": "Patient not found"}), 404
@@ -419,6 +495,11 @@ def create_patient_prescription(patient_id: str):
 
 @api_bp.route("/patients/<patient_id>/discharge", methods=["POST"])
 def discharge_patient_endpoint(patient_id: str):
+    """
+    Endpoint to discharge a patient.
+    Expects a JSON payload matching the DischargeCreate schema.
+    Returns a discharge summary or an error message.
+    """
     patient = get_patient_by_identifier(patient_id)
     if not patient:
         return jsonify({"error": "Patient not found"}), 404
@@ -455,6 +536,11 @@ def discharge_patient_endpoint(patient_id: str):
 
 @api_bp.route("/login", methods=["POST"])
 def login():
+    """
+    Endpoint for user login.
+    Expects a JSON payload matching the LoginRequest schema.
+    Returns a session token and user details if successful, or an error message.
+    """
     data, error = parse_request(schemas.LoginRequest)
     if error:
         return error
@@ -499,4 +585,3 @@ def login():
             reference_id=patient.patient_id,
         ).dict()
     )
-

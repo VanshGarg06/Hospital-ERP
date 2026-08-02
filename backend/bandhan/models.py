@@ -1,45 +1,62 @@
-from __future__ import annotations
+"""
+This module defines the database models 
+for the hospital management system,
+including doctors, patients, visits, 
+prescriptions, schedules, follow-ups, and discharge summaries.
+"""
 
-import enum
+from __future__ import annotations
+from enum import StrEnum #pylint: disable=no-name-in-module
 from datetime import datetime
 from typing import Optional
-
 from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from .database import db
 
-
-class TimestampMixin:
+class TimestampMixin:  # pylint: disable=too-few-public-methods
+    """
+    Mixin class to add created_at and updated_at timestamps to models.
+    """
     created_at: Mapped[datetime] = mapped_column(
-        default=datetime.utcnow, server_default=func.current_timestamp()
+        default=datetime.utcnow, server_default=func.current_timestamp()  # pylint: disable=not-callable
     )
     updated_at: Mapped[datetime] = mapped_column(
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
-        server_default=func.current_timestamp(),
-        server_onupdate=func.current_timestamp(),
+        server_default=func.current_timestamp(),  # pylint: disable=not-callable
+        server_onupdate=func.current_timestamp(),  # pylint: disable=not-callable
     )
 
 
-class VisitType(enum.StrEnum):
+class VisitType(StrEnum): # pylint: disable=too-few-public-methods
+    """
+    Enum for visit types: outpatient or inpatient.
+    """
     OUTPATIENT = "outpatient"
     INPATIENT = "inpatient"
 
-
-class TaskStatus(enum.StrEnum):
+class TaskStatus(StrEnum): # pylint: disable=too-few-public-methods
+    """
+    Enum for task status: pending, in progress, or completed.
+    """
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
 
 
-class FollowUpStatus(enum.StrEnum):
+class FollowUpStatus(StrEnum): # pylint: disable=too-few-public-methods
+    """
+    Enum for follow-up status: scheduled, completed, or cancelled.
+    """
     SCHEDULED = "scheduled"
     COMPLETED = "completed"
     CANCELLED = "cancelled"
 
 
-class Doctor(TimestampMixin, db.Model):
+class Doctor(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
+    """
+    Represents a doctor in the hospital management system.
+    """
     __tablename__ = "doctors"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -62,7 +79,10 @@ class Doctor(TimestampMixin, db.Model):
     )
 
 
-class Patient(TimestampMixin, db.Model):
+class Patient(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
+    """
+    Represents a patient in the hospital management system.
+    """
     __tablename__ = "patients"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -102,7 +122,10 @@ class Patient(TimestampMixin, db.Model):
     )
 
 
-class Visit(TimestampMixin, db.Model):
+class Visit(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
+    """
+    Represents a visit of a patient to the hospital.
+    """
     __tablename__ = "visits"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -117,7 +140,10 @@ class Visit(TimestampMixin, db.Model):
     doctor: Mapped[Optional[Doctor]] = relationship("Doctor")
 
 
-class Prescription(TimestampMixin, db.Model):
+class Prescription(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
+    """
+    Represents a prescription given to a patient by a doctor.
+    """
     __tablename__ = "prescriptions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -131,7 +157,10 @@ class Prescription(TimestampMixin, db.Model):
     doctor: Mapped[Doctor] = relationship("Doctor")
 
 
-class ScheduleItem(TimestampMixin, db.Model):
+class ScheduleItem(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
+    """
+    Represents a schedule or task for a doctor.
+    """
     __tablename__ = "schedule_items"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -146,7 +175,10 @@ class ScheduleItem(TimestampMixin, db.Model):
     doctor: Mapped[Doctor] = relationship("Doctor", back_populates="schedules")
 
 
-class FollowUp(TimestampMixin, db.Model):
+class FollowUp(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
+    """
+    Represents a follow-up appointment for a patient with a doctor.
+    """
     __tablename__ = "follow_ups"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -160,7 +192,10 @@ class FollowUp(TimestampMixin, db.Model):
     patient: Mapped[Patient] = relationship("Patient", back_populates="follow_ups")
 
 
-class DischargeSummary(TimestampMixin, db.Model):
+class DischargeSummary(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
+    """
+    Represents a discharge summary for a patient.
+    """
     __tablename__ = "discharge_summaries"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -173,4 +208,3 @@ class DischargeSummary(TimestampMixin, db.Model):
 
     patient: Mapped[Patient] = relationship("Patient", back_populates="discharge_summaries")
     doctor: Mapped[Doctor] = relationship("Doctor")
-
