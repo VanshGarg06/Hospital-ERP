@@ -1,16 +1,22 @@
-from __future__ import annotations
+"""
+This module defines the database models 
+for the hospital management system,
+including doctors, patients, visits, 
+prescriptions, schedules, follow-ups, and discharge summaries.
+"""
 
+from __future__ import annotations
 import enum
 from datetime import datetime
 from typing import Optional
-
 from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from .database import db
 
-
 class TimestampMixin:
+    """
+    Mixin class to add created_at and updated_at timestamps to models.
+    """
     created_at: Mapped[datetime] = mapped_column(
         default=datetime.utcnow, server_default=func.current_timestamp()
     )
@@ -26,7 +32,6 @@ class VisitType(enum.StrEnum):
     OUTPATIENT = "outpatient"
     INPATIENT = "inpatient"
 
-
 class TaskStatus(enum.StrEnum):
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
@@ -40,6 +45,9 @@ class FollowUpStatus(enum.StrEnum):
 
 
 class Doctor(TimestampMixin, db.Model):
+    """
+    Represents a doctor in the hospital management system.
+    """
     __tablename__ = "doctors"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -63,6 +71,9 @@ class Doctor(TimestampMixin, db.Model):
 
 
 class Patient(TimestampMixin, db.Model):
+    """
+    Represents a patient in the hospital management system.
+    """
     __tablename__ = "patients"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -103,6 +114,9 @@ class Patient(TimestampMixin, db.Model):
 
 
 class Visit(TimestampMixin, db.Model):
+    """
+    Represents a visit of a patient to the hospital.
+    """
     __tablename__ = "visits"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -118,6 +132,9 @@ class Visit(TimestampMixin, db.Model):
 
 
 class Prescription(TimestampMixin, db.Model):
+    """
+    Represents a prescription given to a patient by a doctor.
+    """
     __tablename__ = "prescriptions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -132,6 +149,9 @@ class Prescription(TimestampMixin, db.Model):
 
 
 class ScheduleItem(TimestampMixin, db.Model):
+    """
+    Represents a schedule or task for a doctor.
+    """
     __tablename__ = "schedule_items"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -147,6 +167,9 @@ class ScheduleItem(TimestampMixin, db.Model):
 
 
 class FollowUp(TimestampMixin, db.Model):
+    """
+    Represents a follow-up appointment for a patient with a doctor.
+    """
     __tablename__ = "follow_ups"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -161,6 +184,9 @@ class FollowUp(TimestampMixin, db.Model):
 
 
 class DischargeSummary(TimestampMixin, db.Model):
+    """
+    Represents a discharge summary for a patient.
+    """
     __tablename__ = "discharge_summaries"
 
     id: Mapped[int] = mapped_column(primary_key=True)
