@@ -82,5 +82,4 @@ print("1. Username: Use the ID shown above (e.g., DOC-00001 or PAT-00001)")
 print("2. Password: Use the phone number shown above")
 print("3. Role: Select 'doctor' for doctor accounts or 'patient' for patient accounts")
 print("=" * 80)
-
 conn.close()

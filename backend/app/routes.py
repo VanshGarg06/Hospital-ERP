@@ -81,7 +81,6 @@ def get_doctor_details(doctor_id: str):
     Returns a JSON response with the doctor's information 
     or an error message if not found.
     """
-    
     doctor = (
         Doctor.query.options(
             joinedload(Doctor.patients).joinedload(Patient.visits),
@@ -279,7 +278,6 @@ def update_followup(doctor_id: str, follow_up_id: int):
     Expects a JSON payload with the fields to update (status and/or notes).
     Returns a success message or an error if the doctor or follow-up is not found.
     """
-    
     doctor = get_doctor_by_identifier(doctor_id)
     if not doctor:
         return jsonify({"error": "Doctor not found"}), 404
@@ -331,7 +329,6 @@ def get_patient_details(patient_id: str):
     Returns a JSON response with the patient's information
     or an error message if not found.
     """
-    
     patient = (
         get_patient_by_identifier(patient_id)
     )
