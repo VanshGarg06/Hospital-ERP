@@ -29,16 +29,26 @@ class TimestampMixin:
 
 
 class VisitType(enum.StrEnum):
+    """
+    Enum for visit types: outpatient or inpatient.
+    """
     OUTPATIENT = "outpatient"
     INPATIENT = "inpatient"
 
 class TaskStatus(enum.StrEnum):
+    """
+    Enum for task status: pending, in progress, or completed.
+    """
+    
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
 
 
 class FollowUpStatus(enum.StrEnum):
+    """
+    Enum for follow-up status: scheduled, completed, or cancelled.
+    """
     SCHEDULED = "scheduled"
     COMPLETED = "completed"
     CANCELLED = "cancelled"
