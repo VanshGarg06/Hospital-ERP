@@ -11,7 +11,6 @@ from sqlalchemy.orm import Session
 
 db = SQLAlchemy()
 
-
 def init_db(app) -> None:
     """
     Initialize the database with the Flask app.
@@ -20,7 +19,6 @@ def init_db(app) -> None:
     Args:
         app: The Flask application instance.
     """
-    
     db.init_app(app)
     with app.app_context():
         db.create_all()

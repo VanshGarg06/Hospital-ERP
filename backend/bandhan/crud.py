@@ -151,11 +151,11 @@ def update_patient(patient: Patient, updates: dict) -> Patient:
     return patient
 
 
-def record_visit(patient: Patient, 
-                visit_reason: str, 
-                visit_type: VisitType, 
-                doctor: Optional[Doctor], 
-                notes: Optional[str]) -> Visit:
+def record_visit(patient: Patient,
+    visit_reason: str, 
+    visit_type: VisitType, 
+    doctor: Optional[Doctor], 
+    notes: Optional[str]) -> Visit:
     """
     Record a new visit for a patient in the database.
     Args:
@@ -186,11 +186,11 @@ def record_visit(patient: Patient,
     return visit
 
 
-def add_prescription(patient: Patient, 
-                    doctor: Doctor, 
-                    medication: str, 
-                    dosage: str, 
-                    instructions: str) -> Prescription:
+def add_prescription(patient: Patient,
+    doctor: Doctor, 
+    medication: str, 
+    dosage: str, 
+    instructions: str) -> Prescription:
     """
     Add a new prescription for a patient in the database.
     Args:
@@ -254,10 +254,10 @@ def delete_schedule(schedule: ScheduleItem) -> None:
     db.session.commit()
 
 
-def create_follow_up(doctor: Doctor, 
-                    patient: Patient, 
-                    scheduled_for: datetime, 
-                    notes: Optional[str]) -> FollowUp:
+def create_follow_up(doctor: Doctor,
+    patient: Patient, 
+    scheduled_for: datetime, 
+    notes: Optional[str]) -> FollowUp:
     """
     Create a new follow-up record for a patient in the database.
     Args:
@@ -280,8 +280,8 @@ def create_follow_up(doctor: Doctor,
 
 
 def update_follow_up(follow_up: FollowUp, 
-                    status: FollowUpStatus, 
-                    notes: Optional[str] = None) -> FollowUp:
+    status: FollowUpStatus, 
+    notes: Optional[str] = None) -> FollowUp:
     """
     Update an existing follow-up record in the database.
     Args:
@@ -299,10 +299,10 @@ def update_follow_up(follow_up: FollowUp,
 
 
 def discharge_patient(patient: Patient, 
-                    doctor: Doctor, 
-                    recommendations: Optional[str], 
-                    follow_up_date: Optional[datetime], 
-                    summary_text: str) -> DischargeSummary:
+    doctor: Doctor, 
+    recommendations: Optional[str], 
+    follow_up_date: Optional[datetime], 
+    summary_text: str) -> DischargeSummary:
     """
     Discharge a patient from the hospital and create a discharge summary.
     Args:

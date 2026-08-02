@@ -104,7 +104,6 @@ class PrescriptionCreate(BaseSchema):
     """
     Schema for creating a new prescription.
     """
-    
     doctor_id: str
     medication: str
     dosage: str

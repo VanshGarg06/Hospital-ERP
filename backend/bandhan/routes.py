@@ -45,7 +45,6 @@ def validate(schema_cls: Callable[..., Any], payload: Dict[str, Any]):
     except Exception as exc:  # noqa: BLE001
         return str(exc)
 
-
 def parse_request(schema_cls):
     """
     Parse and validate the incoming JSON request against the provided schema class.
