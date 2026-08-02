@@ -18,13 +18,13 @@ class TimestampMixin:
     Mixin class to add created_at and updated_at timestamps to models.
     """
     created_at: Mapped[datetime] = mapped_column(
-        default=datetime.utcnow, server_default=func.current_timestamp()
+        default=datetime.utcnow, server_default=func.current_timestamp()  # pylint: disable=not-callable
     )
     updated_at: Mapped[datetime] = mapped_column(
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
-        server_default=func.current_timestamp(),
-        server_onupdate=func.current_timestamp(),
+        server_default=func.current_timestamp(),  # pylint: disable=not-callable
+        server_onupdate=func.current_timestamp(),  # pylint: disable=not-callable
     )
 
 
@@ -39,7 +39,6 @@ class TaskStatus(enum.StrEnum):
     """
     Enum for task status: pending, in progress, or completed.
     """
-    
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
