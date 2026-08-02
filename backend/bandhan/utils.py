@@ -15,7 +15,7 @@ ID_PREFIXES: dict[str, str] = {
     "doctor": "DOC",
 }
 
-def generate_identifier(model: type[Patient]|type[Doctor], 
+def generate_identifier(model: type[Patient]|type[Doctor],
     kind: Literal["patient", "doctor"]) -> str:
     """
     Generate a unique identifier for a patient or doctor.

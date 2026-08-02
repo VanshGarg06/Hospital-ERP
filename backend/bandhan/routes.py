@@ -38,12 +38,10 @@ SESSIONS: SessionStore = {}
 def validate(schema_cls: Callable[..., Any], payload: Dict[str, Any]):
     """
     Validate the payload against the provided Pydantic schema class.
-    Returns the validated data or an error message.
+    Returns the validated data.
     """
-    try:
-        return schema_cls(**payload)
-    except Exception as exc:  # noqa: BLE001
-        return str(exc)
+    return schema_cls(**payload)
+
 
 def parse_request(schema_cls):
     """
