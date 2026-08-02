@@ -184,7 +184,7 @@ class DischargeRead(BaseSchema):
 class LoginRequest(BaseSchema):
     """
     Schema for login request.
-    """ 
+    """
     username: str
     password: str
     role: str

@@ -1,5 +1,6 @@
 """
-This module contains CRUD (Create, Read, Update, Delete) operations for the hospital management system.
+This module contains CRUD (Create, Read, Update, Delete) operations 
+for the hospital management system.
 """
 
 from __future__ import annotations

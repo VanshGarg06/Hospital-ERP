@@ -173,4 +173,3 @@ class DischargeSummary(TimestampMixin, db.Model):
 
     patient: Mapped[Patient] = relationship("Patient", back_populates="discharge_summaries")
     doctor: Mapped[Doctor] = relationship("Doctor")
-
