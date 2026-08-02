@@ -6,7 +6,7 @@ prescriptions, schedules, follow-ups, and discharge summaries.
 """
 
 from __future__ import annotations
-from enum import StrEnum
+from enum import StrEnum #pylint: disable=no-name-in-module
 from datetime import datetime
 from typing import Optional
 from sqlalchemy import func

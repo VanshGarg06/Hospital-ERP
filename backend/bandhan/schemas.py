@@ -5,7 +5,7 @@ Schema definitions for the response and request bodies of the API endpoints.
 from __future__ import annotations
 from datetime import date, datetime
 from typing import Optional
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field  #pylint: disable=no-name-in-module
 from .models import FollowUpStatus, TaskStatus, VisitType
 
 class BaseSchema(BaseModel): # pylint: disable=too-few-public-methods
