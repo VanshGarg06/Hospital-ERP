@@ -1,8 +1,12 @@
-from pathlib import Path
+"""
+This module initializes the Flask application, 
+sets up the database connection,and registers the API routes. 
+It also serves the frontend static files and provides a health check endpoint.
+"""
 
+from pathlib import Path
 from flask import Flask, send_from_directory
 from flask_cors import CORS
-
 from .database import init_db
 from .routes import api_bp
 
@@ -10,16 +14,12 @@ from .routes import api_bp
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 FRONTEND_DIR = PROJECT_ROOT / "frontend"
 
-
-def create_app(testing: bool = False) -> Flask:
+def create_app() -> Flask:
     app = Flask(__name__, static_folder=str(FRONTEND_DIR), static_url_path="/static")
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///hospital_erp.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
     CORS(app)
-
     init_db(app)
-
     app.register_blueprint(api_bp, url_prefix="/api")
 
     @app.route("/health")
@@ -42,7 +42,6 @@ def create_app(testing: bool = False) -> Flask:
         except FileNotFoundError:
             # For SPA, return index.html for non-API routes
             return send_from_directory(str(FRONTEND_DIR), "index.html")
-
     return app
 
 app = create_app()
