@@ -6,14 +6,14 @@ prescriptions, schedules, follow-ups, and discharge summaries.
 """
 
 from __future__ import annotations
-import enum
+from enum import StrEnum
 from datetime import datetime
 from typing import Optional
 from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .database import db
 
-class TimestampMixin:
+class TimestampMixin:  # pylint: disable=too-few-public-methods
     """
     Mixin class to add created_at and updated_at timestamps to models.
     """
@@ -28,14 +28,14 @@ class TimestampMixin:
     )
 
 
-class VisitType(enum.StrEnum):
+class VisitType(StrEnum): # pylint: disable=too-few-public-methods
     """
     Enum for visit types: outpatient or inpatient.
     """
     OUTPATIENT = "outpatient"
     INPATIENT = "inpatient"
 
-class TaskStatus(enum.StrEnum):
+class TaskStatus(StrEnum): # pylint: disable=too-few-public-methods
     """
     Enum for task status: pending, in progress, or completed.
     """
@@ -44,7 +44,7 @@ class TaskStatus(enum.StrEnum):
     COMPLETED = "completed"
 
 
-class FollowUpStatus(enum.StrEnum):
+class FollowUpStatus(StrEnum): # pylint: disable=too-few-public-methods
     """
     Enum for follow-up status: scheduled, completed, or cancelled.
     """
