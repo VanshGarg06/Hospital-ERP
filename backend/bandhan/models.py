@@ -53,7 +53,7 @@ class FollowUpStatus(enum.StrEnum):
     CANCELLED = "cancelled"
 
 
-class Doctor(TimestampMixin, db.Model):
+class Doctor(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a doctor in the hospital management system.
     """
@@ -79,7 +79,7 @@ class Doctor(TimestampMixin, db.Model):
     )
 
 
-class Patient(TimestampMixin, db.Model):
+class Patient(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a patient in the hospital management system.
     """
@@ -122,7 +122,7 @@ class Patient(TimestampMixin, db.Model):
     )
 
 
-class Visit(TimestampMixin, db.Model):
+class Visit(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a visit of a patient to the hospital.
     """
@@ -140,7 +140,7 @@ class Visit(TimestampMixin, db.Model):
     doctor: Mapped[Optional[Doctor]] = relationship("Doctor")
 
 
-class Prescription(TimestampMixin, db.Model):
+class Prescription(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a prescription given to a patient by a doctor.
     """
@@ -157,7 +157,7 @@ class Prescription(TimestampMixin, db.Model):
     doctor: Mapped[Doctor] = relationship("Doctor")
 
 
-class ScheduleItem(TimestampMixin, db.Model):
+class ScheduleItem(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a schedule or task for a doctor.
     """
@@ -175,7 +175,7 @@ class ScheduleItem(TimestampMixin, db.Model):
     doctor: Mapped[Doctor] = relationship("Doctor", back_populates="schedules")
 
 
-class FollowUp(TimestampMixin, db.Model):
+class FollowUp(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a follow-up appointment for a patient with a doctor.
     """
@@ -192,7 +192,7 @@ class FollowUp(TimestampMixin, db.Model):
     patient: Mapped[Patient] = relationship("Patient", back_populates="follow_ups")
 
 
-class DischargeSummary(TimestampMixin, db.Model):
+class DischargeSummary(TimestampMixin, db.Model): # pylint: disable=too-few-public-methods
     """
     Represents a discharge summary for a patient.
     """

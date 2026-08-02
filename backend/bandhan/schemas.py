@@ -8,14 +8,14 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
 from .models import FollowUpStatus, TaskStatus, VisitType
 
-class BaseSchema(BaseModel):
+class BaseSchema(BaseModel): # pylint: disable=too-few-public-methods
     """
     Base shema that other schemas inherit from.
     """
     class Config:
         orm_mode = True
 
-class DoctorCreate(BaseSchema):
+class DoctorCreate(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for creating a new doctor.
     """
@@ -27,7 +27,7 @@ class DoctorCreate(BaseSchema):
     specialization: Optional[str] = None
     years_experience: Optional[int] = Field(default=None, ge=0)
 
-class DoctorRead(BaseSchema):
+class DoctorRead(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for reading doctor information.
     """
@@ -42,7 +42,7 @@ class DoctorRead(BaseSchema):
     created_at: datetime
     updated_at: datetime
 
-class PatientCreate(BaseSchema):
+class PatientCreate(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for creating a new patient.
     """
@@ -59,7 +59,7 @@ class PatientCreate(BaseSchema):
     visit_type: VisitType = VisitType.OUTPATIENT
     doctor_id: Optional[str] = None
 
-class PatientRead(BaseSchema):
+class PatientRead(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for reading patient information.
     """
@@ -81,7 +81,7 @@ class PatientRead(BaseSchema):
     created_at: datetime
     updated_at: datetime
 
-class VisitCreate(BaseSchema):
+class VisitCreate(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for creating a new visit record.
     """
@@ -90,7 +90,7 @@ class VisitCreate(BaseSchema):
     doctor_id: Optional[str] = None
     notes: Optional[str] = None
 
-class VisitRead(BaseSchema):
+class VisitRead(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for reading visit information.
     """
@@ -100,7 +100,7 @@ class VisitRead(BaseSchema):
     doctor_id: Optional[str]
     notes: Optional[str]
 
-class PrescriptionCreate(BaseSchema):
+class PrescriptionCreate(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for creating a new prescription.
     """
@@ -109,7 +109,7 @@ class PrescriptionCreate(BaseSchema):
     dosage: str
     instructions: str
 
-class PrescriptionRead(BaseSchema):
+class PrescriptionRead(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for reading prescription information.
     """
@@ -120,7 +120,7 @@ class PrescriptionRead(BaseSchema):
     doctor_id: str
     created_at: datetime
 
-class ScheduleCreate(BaseSchema):
+class ScheduleCreate(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for creating a new schedule/task.
     """
@@ -131,7 +131,7 @@ class ScheduleCreate(BaseSchema):
     location: Optional[str] = None
     status: TaskStatus = TaskStatus.PENDING
 
-class ScheduleRead(BaseSchema):
+class ScheduleRead(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for reading schedule/task information.
     """
@@ -143,7 +143,7 @@ class ScheduleRead(BaseSchema):
     location: Optional[str]
     status: TaskStatus
 
-class FollowUpCreate(BaseSchema):
+class FollowUpCreate(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for creating a new follow-up record.
     """
@@ -151,7 +151,7 @@ class FollowUpCreate(BaseSchema):
     scheduled_for: datetime
     notes: Optional[str] = None
 
-class FollowUpRead(BaseSchema):
+class FollowUpRead(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for reading follow-up information.
     """
@@ -161,7 +161,7 @@ class FollowUpRead(BaseSchema):
     status: FollowUpStatus
     notes: Optional[str]
 
-class DischargeCreate(BaseSchema):
+class DischargeCreate(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for creating a new discharge record.
     """
@@ -170,7 +170,7 @@ class DischargeCreate(BaseSchema):
     follow_up_date: Optional[datetime] = None
     summary_text: str
 
-class DischargeRead(BaseSchema):
+class DischargeRead(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for reading discharge information.
     """
@@ -181,7 +181,7 @@ class DischargeRead(BaseSchema):
     summary_text: str
     doctor_id: str
 
-class LoginRequest(BaseSchema):
+class LoginRequest(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for login request.
     """
@@ -189,7 +189,7 @@ class LoginRequest(BaseSchema):
     password: str
     role: str
 
-class LoginResponse(BaseSchema):
+class LoginResponse(BaseSchema): # pylint: disable=too-few-public-methods
     """
     Schema for login response.
     """
