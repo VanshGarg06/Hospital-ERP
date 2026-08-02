@@ -1,3 +1,7 @@
+"""
+This module contains CRUD (Create, Read, Update, Delete) operations for the hospital management system.
+"""
+
 from __future__ import annotations
 from datetime import datetime
 from typing import Optional
@@ -279,7 +283,7 @@ def create_follow_up(doctor: Doctor,
     return follow_up
 
 
-def update_follow_up(follow_up: FollowUp, 
+def update_follow_up(follow_up: FollowUp,
     status: FollowUpStatus,
     notes: Optional[str] = None) -> FollowUp:
     """
@@ -298,7 +302,7 @@ def update_follow_up(follow_up: FollowUp,
     return follow_up
 
 
-def discharge_patient(patient: Patient, 
+def discharge_patient(patient: Patient,
     doctor: Doctor,
     recommendations: Optional[str],
     follow_up_date: Optional[datetime],

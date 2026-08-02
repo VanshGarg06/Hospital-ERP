@@ -49,4 +49,4 @@ def create_app() -> Flask:
             return send_from_directory(str(FRONTEND_DIR), "index.html")
     return app
 
-app = create_app()
+flask_app = create_app()
