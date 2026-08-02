@@ -15,6 +15,11 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 FRONTEND_DIR = PROJECT_ROOT / "frontend"
 
 def create_app() -> Flask:
+    """
+    Create and configure the Flask application.
+    Returns:
+        A configured Flask application instance.
+    """
     app = Flask(__name__, static_folder=str(FRONTEND_DIR), static_url_path="/static")
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///hospital_erp.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

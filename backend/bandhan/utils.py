@@ -15,13 +15,11 @@ ID_PREFIXES: dict[str, str] = {
     "doctor": "DOC",
 }
 
-def generate_identifier(model: type[Patient] | 
-    type[Doctor], 
+def generate_identifier(model: type[Patient] | type[Doctor], 
     kind: Literal["patient", "doctor"]) -> str:
     """
     Generate a unique identifier for a patient or doctor.
     """
-    
     prefix = ID_PREFIXES[kind]
     latest = (
         db.session.query(model)
@@ -36,7 +34,6 @@ def hash_password(plain_password: str) -> str:
     """
     Hash a plain password using Werkzeug's generate_password_hash function.
     """
-    
     if not plain_password:
         raise ValueError("Password cannot be empty")
     return generate_password_hash(plain_password)

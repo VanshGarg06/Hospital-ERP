@@ -4,7 +4,7 @@ It imports the app instance from the app module and
 runs the application in debug mode when executed directly.
 """
 
-from app import app
+from bandhan import app
 
 if __name__ == "__main__":
     app.run(debug=True)
