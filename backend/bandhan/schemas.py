@@ -12,7 +12,10 @@ class BaseSchema(BaseModel): # pylint: disable=too-few-public-methods
     """
     Base shema that other schemas inherit from.
     """
-    class Config:
+    class Config: # pylint: disable=too-few-public-methods
+        """
+        Pydantic configuration for the schema.
+        """
         orm_mode = True
 
 class DoctorCreate(BaseSchema): # pylint: disable=too-few-public-methods
